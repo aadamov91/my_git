@@ -3,7 +3,7 @@
 #define MAX 100
 #define BUFS 100
 
-main(void)
+main()
 {
 	int n, i;
 	int array[MAX];
@@ -15,6 +15,7 @@ main(void)
 	for (i = 0; i < n; i++)
 		printf ("%d", array[i]);
 	printf("\nend\n");
+	return 0;
 }
 
 int getch(void);
@@ -28,7 +29,6 @@ int getint(int *pn)
 {
 	int c, sign;
 	
-	printf("\nbuffp is %d\n", bufp );
 	
 	while (isspace(c = getchar()))
 	;
@@ -41,7 +41,7 @@ int getint(int *pn)
 	if (c == '+' || c == '-')
 		c = getch();
 	for (*pn = 0; isdigit(c); c = getch())
-		*pn = *pn + (c - '0');
+		*pn =10 *  *pn + (c - '0');
 	*pn *= sign;
 	if (c != EOF)
 		ungetch(c);
