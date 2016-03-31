@@ -4,7 +4,6 @@
 #define MAXLINES 500
 
 char *lineptr[MAXLINES];
-
 int readlines(char *lineptr[], int nlines);
 void writelines(char *lineptr[], int nlines);
 void qsort(char *lineptr[], int left, int right);
@@ -13,7 +12,7 @@ main()
 {
 	int nlines;
 
-	if ((nlines =readlines(lineptr, MAXLINES)) >= 0) {
+	if ((nlines = readlines(lineptr, MAXLINES)) >= 0) {
 		qsort(lineptr, 0, nlines -1 );
 		writelines(lineptr, nlines);
 		return 0;
@@ -24,8 +23,7 @@ main()
 }
 
 #define MAXLEN 100
-int geltine(char *, int);
-char *alloc(int);
+int getline1(char s[], int lim);
 
 int readlines(char *lineptr[], int maxlines)
 {
@@ -33,17 +31,30 @@ int readlines(char *lineptr[], int maxlines)
 	char *p, line[MAXLEN];
 
 	nlines = 0;
-	while((len = getline(line, MAXLEN) > 0)
-		if (nlines >= maxlines || (p = alloc(len)) == NULL)
+	while((len = getline1(line, MAXLEN)) > 0)
+		if (nlines >= maxlines)
 			return -1;
 		else 
-			line[line-1] = '\0';
+			line[len-1] = '\0';
 			strcpy(p, line);
 			lineptr[nlines++] = p;
 		
 	return nlines;
 }
 
+int getline1(char s[], int lim )
+{
+	int i, c ;
+	
+	for (i = 0; i < lim - 1 && (c = getchar()) != EOF && c != '\n'; i++)
+		s[i] = c;
+	if (c == '\n'){
+		s[i] = c;
+		++i;
+	}
+	s[i] = '\n';
+	return i;
+}
 void writelines(char *lineptr[], int nlines)
 {
 	
