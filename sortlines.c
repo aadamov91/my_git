@@ -85,6 +85,6 @@ void swap(char *v[], int i, int j)
 	char *temp;
 
 	temp = v[i];
-	temp = v[j];
+	v[i] = v[j];
 	v[j] = temp;
 }
