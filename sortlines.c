@@ -24,6 +24,7 @@ main()
 
 #define MAXLEN 100
 int getline1(char s[], int lim);
+char *alloc(int );
 
 int readlines(char *lineptr[], int maxlines)
 {
@@ -32,7 +33,7 @@ int readlines(char *lineptr[], int maxlines)
 
 	nlines = 0;
 	while((len = getline1(line, MAXLEN)) > 0)
-		if (nlines >= maxlines)
+		if (nlines >= maxlines || (p = alloc(len)) == NULL)
 			return -1;
 		else 
 			line[len-1] = '\0';
