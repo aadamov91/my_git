@@ -14,6 +14,7 @@ main()
 
 	if ((nlines = readlines(lineptr, MAXLINES)) >= 0) {
 		qsort(lineptr, 0, nlines -1 );
+		printf("TGIS IS YOUR OUTPUT");
 		writelines(lineptr, nlines);
 		return 0;
 	} else {
@@ -35,11 +36,12 @@ int readlines(char *lineptr[], int maxlines)
 	while((len = getline1(line, MAXLEN)) > 0)
 		if (nlines >= maxlines || (p = alloc(len)) == NULL)
 			return -1;
-		else 
+		else
+			{ 
 			line[len-1] = '\0';
 			strcpy(p, line);
 			lineptr[nlines++] = p;
-		
+		}
 	return nlines;
 }
 
@@ -53,7 +55,7 @@ int getline1(char s[], int lim )
 		s[i] = c;
 		++i;
 	}
-	s[i] = '\n';
+	s[i] = '\0';
 	return i;
 }
 void writelines(char *lineptr[], int nlines)
@@ -74,7 +76,7 @@ void qsort(char *v[], int left, int right)
 	last = left;
 	for (i = left+1; i<= right; i++)
 		if (strcmp(v[i], v[left]) < 0)
-			swap(v, left, last);
+			swap(v, ++last, i);
 	swap(v, left, last);
 	qsort(v, left, last-1);
 	qsort(v, last+1, right);
@@ -87,4 +89,23 @@ void swap(char *v[], int i, int j)
 	temp = v[i];
 	v[i] = v[j];
 	v[j] = temp;
+}
+#define ALLOCSIZE 10000
+static char allocbuf[ALLOCSIZE];
+static char *allocp = allocbuf;
+
+char *alloc(int n)
+{
+	if (allocbuf + ALLOCSIZE - allocp >= n){
+	allocp += n;
+	return allocp - n;
+	}
+	else 
+		return 0;
+}
+
+void afree (char *p)
+{
+	if (p >= allocbuf && p < allocbuf + ALLOCSIZE)
+		allocp = p;
 }
