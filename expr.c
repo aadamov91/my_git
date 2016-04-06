@@ -12,15 +12,11 @@ double pop(void);
 
 main(int argc, char *argv[])
 {
-	char  *s;
-	int b;
 	double op2;
 	while (--argc > 0 ){
-		s = *++argv;
-		b = s[0];
-		switch (b) {
-			case NUMBER:
-				push(atof(s));
+		switch ((*++argv)[0]) {
+			case '0' ... '9':
+				push(atof(*argv));
 				break;
 			case '+':
 				push(pop() + pop());
@@ -38,7 +34,7 @@ main(int argc, char *argv[])
 				push(pop() / op2);
 				break;
 			default:
-				printf("error: unknown command:%s\n", s);
+				printf("error: unknown command:%s\n", argv[0]);
 				break;
 			}
 		}
@@ -49,7 +45,7 @@ main(int argc, char *argv[])
 void push(double f)
 {
 	if (sp < MAXVAL)
-		val[++sp] = f;
+		val[sp++] = f;
 	else
 		printf("stack if full cant push %g\n", f);
 }
