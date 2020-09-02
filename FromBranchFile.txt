@@ -6,3 +6,4 @@ modify in master
 modify in master
 commit 3
 >>>>>>> dev/testCommit
+commit feature
